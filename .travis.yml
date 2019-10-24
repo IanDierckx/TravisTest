@@ -13,7 +13,6 @@ addons:
     - cmake
 # the install step will take care of deploying a newer cmake version
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-7" CC="gcc-7"; fi
   # first we create a directory for the CMake binaries
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
