@@ -14,9 +14,9 @@ addons:
 # the install step will take care of deploying a newer cmake version
 install:
   - CMAKE_INSTALLER=install-cmake.sh
-    curl -sSL https://cmake.org/files/v3.16/cmake-3.15.5-Linux-x86_64.sh -o ${CMAKE_INSTALLER}
-    chmod +x ${CMAKE_INSTALLER}
-    sudo ./${CMAKE_INSTALLER} --prefix=/usr/local --skip-license
+  - curl -sSL https://cmake.org/files/v3.16/cmake-3.15.5-Linux-x86_64.sh -o ${CMAKE_INSTALLER}
+  - chmod +x ${CMAKE_INSTALLER}
+  - sudo ./${CMAKE_INSTALLER} --prefix=/usr/local --skip-license
 
 before_script:
   # create a build folder for the out-of-source build
