@@ -10,23 +10,18 @@ addons:
     - ubuntu-toolchain-r-test
     packages:
     - g++-7
-    - cmake
-# the install step will take care of deploying a newer cmake version
-install:
-  - CMAKE_INSTALLER=install-cmake.sh
-  - curl -sSL https://cmake.org/files/v3.16/cmake-3.15.5-Linux-x86_64.sh -o ${CMAKE_INSTALLER}
-  - chmod +x ${CMAKE_INSTALLER}
-    sudo ./${CMAKE_INSTALLER} --prefix=/usr/local --skip-license
 
-before_script:
-  # create a build folder for the out-of-source build
-  - mkdir build
-  # switch to build directory
-  - cd build
-  # run cmake; here we assume that the project's
-  # top-level CMakeLists.txt is located at '..'
-  - cmake ..
+# credits to Sam Legrand
+before_install:
+- mkdir cmake-dist
+- travis_retry wget -qO- https://cmake.org/files/v3.12/cmake-3.12.1-Linux-x86_64.tar.gz | sudo tar --strip-components=1 -C cmake-dist -xz 
+- export PATH=$PWD/cmake-dist/bin:$PATH;
+
+install:
+- if [ "$CXX" = "g++" ]; then export CXX="g++-7" CC="gcc-7"; fi
 
 script:
+  - mkdir build
+  - cd build
   - gcc -v && g++ -v && cmake --version
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make
